@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hangman Game</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Arimo:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Niconne|Patrick+Hand+SC" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head> 
+  <body>
+
+    <header>
+      <div class="row">
+        <img src="assets/images/clef.png">
+        <img src="assets/images/note.png">
+      	<h1>Hangman</h1>
+        <img src="assets/images/note.png">
+        <img src="assets/images/clef.png">
+      </div>
+      <p>Classical Composers</p>
+    </header>
+
+    <div id="content">
+      
+      <div class="column">
+        <div id="composer_area">
+          <img src="assets/images/questionmark.jpg">
+        </div>
+        <!-- <h3 id="name">Guess Who?</h3> -->
+      </div>
+<!-- 
+      <div id="scoreArea">
+        <div id="winsArea">
+          <h2 id="winHeader">WINS</h2>
+          <p id="wins">0</p>
+        </div>
+        <div id="lossesArea">
+          <h2 id="lossHeader">LOSSES</h2>
+          <p id="losses">0</p>
+        </div>
+      </div> -->
+
+
+      <div id="game_area">
+
+        <h2>Press Any Key to Get Started!</h2>
+
+      	<div class="row">
+
+          <section id="word">
+        	</section>
+
+          <!-- <section id="result_icon">
+          </section> -->
+
+        </div>
+
+        <div id="scoreArea">
+          <div id="winsArea">
+            <h2 id="winHeader">WINS</h2>
+            <p id="wins">0</p>
+          </div>
+          <div id="lossesArea">
+            <h2 id="lossHeader">LOSSES</h2>
+            <p id="losses">0</p>
+          </div>
+        </div>
+
+        <section id="letters_guessed">
+          <h4>Letters Guessed:</h4>
+          <div id="guessed_list"></div>
+        </section>
+
+        <section id="guesses_remaining">
+          <h4>Guesses Remaining:</h4>
+          <div id="remaining">8</div>
+        </section>
+
+        <section id="button_zone">
+          <button type="button">New Word</button>
+        </section>
+
+      </div>
+
+    </div>
+		
+		<script type="text/javascript" src="assets/javascript/game.js"></script>
+  </body>
+</html>

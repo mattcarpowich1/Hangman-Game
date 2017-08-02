@@ -1,0 +1,183 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: black;
+}
+
+header {
+	margin-bottom: 40px;
+	background-color: #c93636;
+}
+
+.row {
+	display: flex;
+	font-family: 'Patrick Hand SC', Helvetica, sans-serif;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+header p {
+	background-color: white;
+	color: #c93636;
+	font-family: 'Patrick Hand SC', Helvetica, sans-serif;
+	font-size: 1.6em;
+	text-align: center;
+}
+
+h1 {
+	font-size: 5.4em;
+	font-weight: 700;
+	color: white;
+	text-align: center;
+	background-color: #c93636;
+}
+
+#content {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	margin: 0 auto;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+h3 {
+	margin: 20px;
+	font-size: 2.5em;
+	font-family: 'Patrick Hand SC', sans-serif;
+	color: white;
+}
+
+#composer_area {
+	width: 250px;
+	height: 375px;
+	display: flex;
+	direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#composer_area img {
+	width: 100%;
+	height: auto;
+
+}
+
+#scoreArea {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#winsArea, #lossesArea {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#winsArea h2, #lossesArea h2 {
+	width: 130px;
+	text-align: center;
+	color: white;
+	font-family: 'Patrick Hand SC', sans-serif;
+}
+
+#wins, #losses {
+	width: 130px;
+	font-family: 'Patrick Hand SC', sans-serif;
+	color: white;
+	font-size: 28px;
+	text-align: center;
+}
+
+#game_area {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 2px dotted white;
+}
+
+#game_area > * {
+	margin-bottom: 14px;
+	margin-top: 14px
+}
+
+#word {
+	font-size: 3em;
+	font-family: 'Patrick Hand SC', sans-serif;
+	padding: 10px 20px 10px calc(20px + .2em) ;
+	text-align: center;
+	color: white;
+	letter-spacing: .2em;
+	width: 440px;
+}
+
+#result_icon {
+	height: 48px;
+	width: 48px;
+}
+
+#letters_guessed, #guesses_remaining {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 440px;
+}
+
+#letters_guessed div {
+	width: 180px;
+	color: white;
+}
+
+#guessed_list {
+	text-align: center;
+	font-family: 'Patrick Hand SC', sans-serif;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2em;
+}
+
+#remaining {
+	color: white;
+	font-family: 'Patrick Hand SC', sans-serif;
+	font-size: 2em;
+}
+
+button {
+	background-color: #c93636;
+	font-family: 'Patrick Hand SC', sans-serif;
+	color: white;
+	border: none;
+	padding: 10px 20px 10px 20px;
+	height: 68px;
+	border: 2px solid white;
+	border-radius: 8px;
+	font-size: 28px;
+}
+
+h2 {
+	font-size: 28px;
+	color: white;
+	font-family: 'Patrick Hand SC', sans-serif;
+}
+
+h4 {
+	color: white;
+	font-family: 'Patrick Hand SC';
+	font-size: 2em;
+}
+
