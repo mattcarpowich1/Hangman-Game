@@ -1,8 +1,11 @@
 //where the word to be guessed will be displayed
 var wordZone = document.getElementById("word");
 
-//where the result icon will be displayed
-var resultIcon = document.getElementById("result_icon");
+//where total number of wins will be displayed
+var winsDisplay = document.getElementById("wins");
+
+//where total number of losses will be displayed
+var lossesDisplay = document.getElementById("losses");
 
 //where letters guessed will be displayed
 var guessedZone = document.getElementById("guessed_list");
@@ -20,15 +23,14 @@ var composerPic = document.getElementById("composer_area");
 var composerName = document.getElementById("name");
 
 //words for the game [lastName, firstName]
-var composers = [ ['Mozart', 'Wolfgang Amadeus'], ['Beethoven', 'Ludwig Van'], ['Haydn', 'Joseph'], ['Debussy', 'Claude'], ['Wagner', 'Richard'], ['Bach', 'Johann Sebastian'], ['Stravinsky', 'Igor'], ['Chopin', 'Frederic'] ['Schubert', 'Franz'], ['Tchaikovsky', 'Pyotr Ilyich'], ['Brahms', 'Johannes'], ['Vivaldi', 'Antonio'], ['Handel', 'George Frideric'], ['Ravel', 'Maurice'], ['Mahler', 'Gustav'] ];
+var composers = [ ['Mozart', 'Wolfgang Amadeus'], ['Beethoven', 'Ludwig Van'], ['Haydn', 'Joseph'], ['Debussy', 'Claude'], ['Wagner', 'Richard'], ['Bach', 'Johann Sebastian'], ['Stravinsky', 'Igor'], ['Chopin', 'Frederic'], ['Schubert', 'Franz'], ['Tchaikovsky', 'Pyotr Ilyich'], ['Brahms', 'Johannes'], ['Vivaldi', 'Antonio'], ['Handel', 'George Frideric'], ['Ravel', 'Maurice'], ['Mahler', 'Gustav'] ];
 
-// , 'Schubert', 'Tchaikovsky', 'Handel', 'Brahms', 'Vivaldi', 'Mahler', 'Liszt', 'Verdi', 'Ravel', 'Rachmaninoff', 'Mendelssohn', 'Shostakovich', 'Schoenberg', 'Dvorak', 'Puccini', 'Prokofiev', 'Strauss', 'Bartok', 'Berlioz', 'Bruckner', 'Monteverdi', 'Copland'];
+//second array to keep track of words already used
+var composers2 = [];
 
 //keep track of wins and losses
 var wins, losses;
 wins = losses = 0;
-var winsDisplay = document.getElementById("wins");
-var lossesDisplay = document.getElementById("losses");
 
 
 //checks if letter is alphabetical
@@ -50,6 +52,18 @@ function lineify(word) {
 	return lines;
 }
 
+//call to test values
+function testGame(gameX) {
+	console.log("this.word = " + gameX.word);
+	console.log("this.wordSpace = " + gameX.wordSpace);
+	console.log("this.wordLength = " + gameX.word.length);
+	console.log ("this.remainingGuesses = " + gameX.remainingGuesses);
+	for (var i = 0; i < gameX.lettersGuessed.length; i++) {
+		console.log("guessed letter " + gameX.lettersGuessed[i]);
+	}
+	console.log("Game over = " + game.isOver);
+}
+
 //game constructor
 function GameBuilder(word) {
 	this.word = word[0];
@@ -69,7 +83,7 @@ function GameBuilder(word) {
 		return true;
 	};
 
-	//does what it says it does
+	//updates what the user sees in browser
 	this.updateDisplay = function() {
 		//update word area
 		wordZone.textContent = this.wordSpace.toUpperCase();
@@ -92,24 +106,30 @@ function GameBuilder(word) {
 	};
 }
 
-//call to test values
-function testGame(gameX) {
-	console.log("this.word = " + gameX.word);
-	console.log("this.wordSpace = " + gameX.wordSpace);
-	console.log("this.wordLength = " + gameX.word.length);
-	console.log ("this.remainingGuesses = " + gameX.remainingGuesses);
-	for (var i = 0; i < gameX.lettersGuessed.length; i++) {
-		console.log("guessed letter " + gameX.lettersGuessed[i]);
-	}
-	console.log("Game over = " + game.isOver);
-}
+  //INITIALIZE FIRST GAME//
+ /////////////////////////
+//choose random index between 0 and composers.lenth - 1
+var randomIndex = Math.floor(Math.random()*composers.length);
 
-//initialize game
-var randomWord = composers[Math.floor(Math.random()*composers.length)];
-console.log("random word " + randomWord);
+//using that index, select word from list of words
+var randomWord = composers[randomIndex];
+
+//remove word from composers array so it won't be used again
+composers.splice(randomIndex, 1);
+
+//put word into the list of already used words
+composers2.push(randomWord);
+
+//create new game object
 var game = new GameBuilder(randomWord);
+
+//update the display on screen
 game.updateDisplay();
 
+
+
+  //EVENT LISTENER//
+ //////////////////
 //when key is pressed...
 document.addEventListener("keyup", function(event) {
 
@@ -169,20 +189,40 @@ document.addEventListener("keyup", function(event) {
 
 	//if game is over automatically generate a new game
 	if (game.isOver) {
+
 		//after a short delay, start new game
 		setTimeout(function() {
-			//generate a new word and create a new game
-			randomWord = composers[Math.floor(Math.random()*composers.length)];
+
+			//if all words have been exhausted...
+			if (composers.length === 0) {
+				//reset the arrays to original state
+				composers = composers2;
+				composers2 = [];
+			}
+
+			//choose random index between 0 and composers.length - 1
+			randomIndex = Math.floor(Math.random()*composers.length);
+
+			//using that index, select word from list of words
+			randomWord = composers[randomIndex];
+			
+			//remove word from composers array so it won't be used again
+			composers.splice(randomIndex, 1);
+
+			//put word into the list of already used words
+			composers2.push(randomWord);
+
+			//create new game object using selected composer
 			game = new GameBuilder(randomWord);
+
 			//turn win/loss column headers back to white
 			document.getElementById("winHeader").style.color = "white";
 			document.getElementById("lossHeader").style.color = "white";
-			//update the display
+
+			//...and update the display
 			game.updateDisplay();
+
 		}, 2000);
 	}
-
-	//check values
-	testGame(game);
 
 });
