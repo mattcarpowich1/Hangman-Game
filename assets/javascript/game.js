@@ -180,11 +180,11 @@ document.addEventListener("keyup", function(event) {
 		//increment total wins
 		wins++;
 		//display picture of composer
-		composerPic.innerHTML = "<img src='./assets/images/" + game.word + ".jpg' alt='composer'>";
+		composerPic.innerHTML = "<img src='./assets/images/" + game.word.toUpperCase().toLowerCase() + ".jpg' alt='composer'>";
 		//include the composer's full name below the image
 		composerName.textContent = game.firstName + " " + game.word;
     //play audio from composer  
-    song.innerHTML = "<source src='./assets/music/" + game.word + ".mp3' type=audio/mpeg>";
+    song.innerHTML = "<source src='./assets/music/" + game.word.toUpperCase().toLowerCase() + ".mp3' type=audio/mpeg>";
     song.load();
     song.play();
 		//turn the win column header green indicating a win
