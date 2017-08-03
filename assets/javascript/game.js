@@ -19,8 +19,10 @@ var composerPic = document.getElementById("composer_area");
 //where composer's name will show underneath photo
 var composerName = document.getElementById("name");
 
-//words for the game 
-var composers = ['Mozart', 'Beethoven', 'Haydn', 'Debussy', 'Wagner', 'Bach', 'Stravinsky', 'Chopin', 'Schubert', 'Tchaikovsky', 'Handel', 'Brahms', 'Vivaldi', 'Mahler', 'Liszt', 'Verdi', 'Ravel', 'Rachmaninoff', 'Mendelssohn', 'Shostakovich', 'Schoenberg', 'Dvorak', 'Puccini', 'Prokofiev', 'Strauss', 'Bartok', 'Berlioz', 'Bruckner', 'Monteverdi', 'Copland'];
+//words for the game [lastName, firstName]
+var composers = [ ['Mozart', 'Wolfgang Amadeus'], ['Beethoven', 'Ludwig Van'], ['Haydn', 'Joseph'], ['Debussy', 'Claude'], ['Wagner', 'Richard'], ['Bach', 'Johann Sebastian'], ['Stravinsky', 'Igor'], ['Chopin', 'Frederic'] ['Schubert', 'Franz'], ['Tchaikovsky', 'Pyotr Ilyich'], ['Brahms', 'Johannes'], ['Vivaldi', 'Antonio'], ['Handel', 'George Frideric'], ['Ravel', 'Maurice'], ['Mahler', 'Gustav'] ];
+
+// , 'Schubert', 'Tchaikovsky', 'Handel', 'Brahms', 'Vivaldi', 'Mahler', 'Liszt', 'Verdi', 'Ravel', 'Rachmaninoff', 'Mendelssohn', 'Shostakovich', 'Schoenberg', 'Dvorak', 'Puccini', 'Prokofiev', 'Strauss', 'Bartok', 'Berlioz', 'Bruckner', 'Monteverdi', 'Copland'];
 
 //keep track of wins and losses
 var wins, losses;
@@ -50,9 +52,10 @@ function lineify(word) {
 
 //game constructor
 function GameBuilder(word) {
-	this.word = word.toUpperCase().toLowerCase();
-	this.wordSpace = lineify(word);
-	this.remainingGuesses = 5;
+	this.word = word[0];
+	this.firstName = word[1];
+	this.wordSpace = lineify(this.word);
+	this.remainingGuesses = 8;
 	this.lettersGuessed = [];
 	this.isOver = false;
   
@@ -115,44 +118,48 @@ document.addEventListener("keyup", function(event) {
 		return false;
 	}
 															   
-	//figure out which key it was //
+	//figure out which key it was 
 	var key = event.key;
 
 	//check if the key is actually a letter
 	// or if it has already been guessed
 	if ((!isAlpha(key)) || (game.lettersGuessed.indexOf(key) > -1)) {
 		return false;
-	} else {
-		//add to the guessed letters list
-		game.lettersGuessed.push(key.toLowerCase());
-	}
+	} 
 
-	//check if the letter is in the word
-	if (game.word.indexOf(key) > -1) {
+	//check if the letter is in the lowercase version of the word
+	if (game.word.toUpperCase().toLowerCase().indexOf(key) > -1) {
 		//fill in the letter for each appearance in word
 		for (var i = 0; i < game.word.length; i++) {
-			if (game.word.charAt(i) === key) {
+			if (game.word.toUpperCase().toLowerCase().charAt(i) === key) {
 				game.wordSpace = game.wordSpace.replaceAt(i, key);
 			}
 		} 
 	} else {
 		//SUBRTACT one from remaining guesses
 		game.remainingGuesses-=1;
+		//add the letter to letters guessed list
+		game.lettersGuessed.push(key.toLowerCase());
+
 	}
 
 	//is the game over?
 	if (game.remainingGuesses === 0) {
 		//the player has lost
 		game.isOver = true;
+		//increment total losses
 		losses++;
 		//turn the loss column header red indicating a loss
 		document.getElementById("lossHeader").style.color = "#c93636";
 	} else if (game.wordHasBeenGuessed()) {
 		//the player has won
 		game.isOver = true;
+		//increment total wins
 		wins++;
 		//display picture of composer
 		composerPic.innerHTML = "<img src='assets/images/" + game.word + ".jpg' alt='composer'>";
+		//include the composer's full name below the image
+		composerName.textContent = game.firstName + " " + game.word;
 		//turn the win column header green indicating a win
 		document.getElementById("winHeader").style.color = "#31af91";
 	}
@@ -160,26 +167,22 @@ document.addEventListener("keyup", function(event) {
 	//update the display     
 	game.updateDisplay();
 
+	//if game is over automatically generate a new game
+	if (game.isOver) {
+		//after a short delay, start new game
+		setTimeout(function() {
+			//generate a new word and create a new game
+			randomWord = composers[Math.floor(Math.random()*composers.length)];
+			game = new GameBuilder(randomWord);
+			//turn win/loss column headers back to white
+			document.getElementById("winHeader").style.color = "white";
+			document.getElementById("lossHeader").style.color = "white";
+			//update the display
+			game.updateDisplay();
+		}, 2000);
+	}
+
 	//check values
 	testGame(game);
 
 });
-
-//start new game when new word button is pressed
-newGameButton.addEventListener("click", function() {
-	//generate word for new game
-	randomWord = composers[Math.floor(Math.random()*composers.length)];
-	//create new game
-	game = new GameBuilder(randomWord);
-	//refresh display
-	game.updateDisplay();
-	//turn composer pic back to mystery pic
-	composerPic.innerHTML = "<img src='assets/images/questionmark.jpg' alt='question mark'>";
-	//turn wins/losses font back to white
-	document.getElementById("lossHeader").style.color = "white";
-	document.getElementById("winHeader").style.color = "white";
-});
-
-
-
-
