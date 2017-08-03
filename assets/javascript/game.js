@@ -22,6 +22,9 @@ var composerPic = document.getElementById("composer_area");
 //where composer's name will show underneath photo
 var composerName = document.getElementById("name");
 
+//element through which audio will play
+var song = document.getElementById("player");
+
 //words for the game [lastName, firstName]
 var composers = [ ['Mozart', 'Wolfgang Amadeus'], ['Beethoven', 'Ludwig Van'], ['Haydn', 'Joseph'], ['Debussy', 'Claude'], ['Wagner', 'Richard'], ['Bach', 'Johann Sebastian'], ['Stravinsky', 'Igor'], ['Chopin', 'Frederic'], ['Schubert', 'Franz'], ['Tchaikovsky', 'Pyotr Ilyich'], ['Brahms', 'Johannes'], ['Vivaldi', 'Antonio'], ['Handel', 'George Frideric'], ['Ravel', 'Maurice'], ['Mahler', 'Gustav'] ];
 
@@ -52,11 +55,11 @@ function lineify(word) {
 	return lines;
 }
 
-//call to test values
+//call to test game values
 function testGame(gameX) {
 	console.log("this.word = " + gameX.word);
+  console.log("this.firstName = " + gameX.firstName);
 	console.log("this.wordSpace = " + gameX.wordSpace);
-	console.log("this.wordLength = " + gameX.word.length);
 	console.log ("this.remainingGuesses = " + gameX.remainingGuesses);
 	for (var i = 0; i < gameX.lettersGuessed.length; i++) {
 		console.log("guessed letter " + gameX.lettersGuessed[i]);
@@ -180,6 +183,10 @@ document.addEventListener("keyup", function(event) {
 		composerPic.innerHTML = "<img src='assets/images/" + game.word + ".jpg' alt='composer'>";
 		//include the composer's full name below the image
 		composerName.textContent = game.firstName + " " + game.word;
+    //play audio from composer  
+    song.innerHTML = "<source src='assets/music/" + game.word + ".mp3' type=audio/mpeg>";
+    song.load();
+    song.play();
 		//turn the win column header green indicating a win
 		document.getElementById("winHeader").style.color = "#31af91";
 	}
