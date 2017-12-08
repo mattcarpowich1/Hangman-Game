@@ -1,2 +1,4 @@
 # Hangman-Game
-Homework 3 - Hangman Game
+Hangman game built with jQuery 
+
+https://mattcarpowich1.github.io/Hangman-Game/
